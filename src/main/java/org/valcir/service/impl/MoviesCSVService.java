@@ -19,6 +19,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Serviço responsável por importar dados de filmes a partir de um arquivo CSV
+ * e persistir no banco os produtores, estúdios e filmes.
+ */
 @ApplicationScoped
 public class MoviesCSVService implements IMoviesCSVService {
 
@@ -28,6 +32,12 @@ public class MoviesCSVService implements IMoviesCSVService {
 
     private static final Logger LOG = Logger.getLogger(MoviesCSVService.class);
 
+    /**
+     * Realiza a leitura e persistência de dados contidos em um arquivo CSV.
+     * O CSV deve conter as colunas: year;title;studios;producers;winner
+     *
+     * @param csvFilePath caminho do arquivo CSV (relativo ao classpath)
+     */
     @Override
     @Transactional
     public void persistFromCSV(String csvFilePath) {

@@ -5,9 +5,19 @@ import org.valcir.service.EntitiesCRUD.ICRUDDefaults;
 
 import java.util.List;
 
+/**
+ * Implementação base genérica para serviços CRUD usando Panache.
+ *
+ * @param <T> o tipo da entidade manipulada
+ */
 public abstract class CRUDDefaults <T>
         implements ICRUDDefaults<T> {
 
+    /**
+     * Deve ser implementado pelas subclasses para fornecer o repositório específico da entidade.
+     *
+     * @return repositório Panache correspondente ao tipo T
+     */
     protected abstract PanacheRepository<T> getRepository();
 
     @Override

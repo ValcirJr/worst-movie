@@ -12,17 +12,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Serviço responsável por calcular os intervalos entre vitórias
+ * de produtores no prêmio Golden Raspberry.
+ * Retorna os maiores e menores gaps entre vitórias consecutivas.
+ */
 @ApplicationScoped
 public class RewardGapsService implements IRewardGapsService {
 
     @Inject IMovieService movieService;
 
+    /**
+     * Retorna a lista de produtores com o maior intervalo entre vitórias consecutivas.
+     *
+     * @return lista de {@link WinningsIntervalDTO} com o maior gap encontrado
+     */
     public List<WinningsIntervalDTO> getBiggestGap(){
         List<WinningsIntervalDTO> allIntervals = getWinningIntervalsByProducer();
         int max = allIntervals.stream().mapToInt(WinningsIntervalDTO::interval).max().orElse(0);
         return allIntervals.stream().filter(i -> i.interval() == max).toList();
     }
 
+    /**
+     * Retorna a lista de produtores com o menor intervalo entre vitórias consecutivas.
+     *
+     * @return lista de {@link WinningsIntervalDTO} com o menor gap encontrado
+     */
     public List<WinningsIntervalDTO> getSmallestGap(){
         List<WinningsIntervalDTO> allIntervals = getWinningIntervalsByProducer();
         int min = allIntervals.stream().mapToInt(WinningsIntervalDTO::interval).min().orElse(0);
