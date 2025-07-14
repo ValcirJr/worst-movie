@@ -52,13 +52,17 @@ public class RewardGapsService implements IRewardGapsService {
 
     private Map<String, List<Integer>> getWinningYearsByProducer(List<Movie> goldenRaspberryWinners) {
         return goldenRaspberryWinners.stream()
+                .flatMap(movie -> movie.getProducers().stream()
+                        .map(producer -> Map.entry(producer.getName(), movie.getYear()))
+                )
                 .collect(
                         Collectors.groupingBy(
-                                m -> m.getProducer().getName(),
-                                Collectors.mapping(Movie::getYear, Collectors.toList())
+                                Map.Entry::getKey,
+                                Collectors.mapping(Map.Entry::getValue, Collectors.toList())
                         )
                 );
     }
+
 
     private List<WinningsIntervalDTO> getWinningsInterval(Map<String, List<Integer>> winningYearsByProducer) {
         return winningYearsByProducer.entrySet().stream()
